@@ -13,16 +13,16 @@ for (( c = 1; c <= ${user_ip_num}; c++ ));do
 		user_ip=${user_ip_head}${c}"."${d}
 		if (("$d" < 10)); then
 			ssh_port="6"${c}"00"${d}
-			user_port_first="500"${d}"0"
-			user_port_last="500"${d}"9"
+			user_port_first="100"${d}"0"
+			user_port_last="100"${d}"9"
 		elif (("$d" < 100)); then
 			ssh_port="6"${c}"0"${d}
-			user_port_first="50"${d}"0"
-			user_port_last="50"${d}"9"
+			user_port_first="10"${d}"0"
+			user_port_last="10"${d}"9"
 		else
 			ssh_port="6"${c}${d}
-			user_port_first="5"${d}"0"
-			user_port_last="5"${d}"9"
+			user_port_first="1"${d}"0"
+			user_port_last="1"${d}"9"
 		fi
 		iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp --dport ${ssh_port} -j DNAT --to-destination ${user_ip}:22
 		iptables -t nat -A PREROUTING -i eth1 -p tcp -m tcp --dport ${user_port_first}:${user_port_last} -j DNAT --to-destination ${user_ip}
